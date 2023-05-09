@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hipstershop
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Shenali-SJ/test-app-werwerr-helm.git
+    targetRevision: main
+    path: ./
+    helm:
+      valueFiles:
+      - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argoapp
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
